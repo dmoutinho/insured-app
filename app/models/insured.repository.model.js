@@ -1,10 +1,93 @@
 const Insured = require('./insured.model.js');
 const insuredList = new Array();
 
-insuredList.push(new Insured("João"));
-insuredList.push(new Insured("Maria"));
-insuredList.push(new Insured("Joana"));
-insuredList.push(new Insured("Pedro"));
+
+//module.exports = function(firstName,lastName,birthday,contact,location,payment) {
+
+insuredList.push(new Insured("João",
+    "Silva",
+    "12345678969",
+    "1960-01-13",
+    {
+        email:"jsilva@insured.com.br",
+        phone:"5521999988886"
+    },
+    {
+        country : "Brasil",
+        state : "Rio de Janeiro",
+        city : "Rio de Janeiro",
+        street : "Rua Cosme Velho",
+        number : "513",
+        code : "22241125"
+    },
+    {
+        cardNumber : "9999999999999999", 
+        valid : "21-09"
+    }
+));
+insuredList.push(new Insured("Maria",
+    "Maria",
+    "12345678977",
+    "1960-06-17",
+    {
+        email:"mmaria@insured.com.br",
+        phone:"5521999977774"
+    },
+    {
+        country : "Brasil",
+        state : "Rio de Janeiro",
+        city : "Niterói",
+        street : "Estr. da Viração",
+        number : "",
+        code : "26177600"
+    },
+    {
+        cardNumber : "8888888888888888", 
+        valid : "20-08"
+    }
+));
+insuredList.push(new Insured("José",
+    "Santos",
+    "12345678966",
+    "1950-04-09",
+    {
+        email:"jsantos@insured.com.br",
+        phone:"5521999966655"
+    },
+    {
+        country : "Brasil",
+        state : "Rio de Janeiro",
+        city : "Rio de Janeiro",
+        street : "Av. Pres. Castelo Branco",
+        number : "",
+        code : "20271130"
+    },
+    {
+        cardNumber : "7777777777777777", 
+        valid : "19-08"
+    }
+));
+insuredList.push(new Insured("Francisco",
+    "Sousa",
+    "12345678955",
+    "2005-06-17",
+    {
+        email:"fsousa@insured.com.br",
+        phone:"5521999955555"
+    },
+    {
+        country : "Brasil",
+        state : "Rio de Janeiro",
+        city : "Rio de Janeiro",
+        street : "R. dos Arcos",
+        number : "",
+        code : "20230060"
+    },
+    {
+        cardNumber : "6666666666666666", 
+        valid : "19-08"
+    }
+));
 
 exports.create = (insured) => {
     try {
@@ -34,12 +117,10 @@ exports.findOneById = findOneById;
 
 exports.update = (id,insured) => {
     try {
-        console.log("===> teste: "+JSON.stringify(id));
         var ins = findOneById(id);
         if(ins) {
         	ins.name = insured.name;
         }
-        console.log("===> teste: "+JSON.stringify(ins));
         return ins;
     } catch (error) {
         console.log("repository update error: "+error.message);
