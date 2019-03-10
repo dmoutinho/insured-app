@@ -1,10 +1,5 @@
-const insured = require('../models/insured.model.js');
-
-var insuredList = new Array();
-insuredList[0] = insured.create("João");
-insuredList[1] = insured.create("Maria");
-insuredList[2] = insured.create("Joana");
-insuredList[3] = insured.create("Pedro");
+const Insured = require('../models/insured.model.js');
+const insuredRepository = require('../models/insured.repository.model.js');
 
 // Create and Save a new Insured
 exports.create = (req, res) => {
@@ -17,11 +12,9 @@ exports.create = (req, res) => {
             });
         }
 
-        var ins = insured.create(req.body.name);
+        var ins = insuredRepository.create(new Insured(req.body.name));
 
-        insuredList[insuredList.length] = ins;
-
-        console.log("create: "+JSON.stringify(insuredList));
+        console.log("create: "+JSON.stringify(ins));
 
         res.send(ins);
 
@@ -36,8 +29,9 @@ exports.create = (req, res) => {
 // Retrieve and return all Insured from the database.
 exports.findAll = (req, res) => {
     try {
-        console.log("findAll: "+JSON.stringify(insuredList));
-        res.send(insuredList);
+        var all = insuredRepository.findAll();
+        console.log("findAll: "+JSON.stringify(all));
+        res.send(all);
     } catch (error) {
         console.log("findAll error: "+error.message);
         res.status(500).send({
@@ -50,7 +44,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     try {
         console.log("findOne id: "+req.params.insuredId);
-        var ins = insuredList.find( i => i.id === req.params.insuredId );
+        var ins = insuredRepository.findOneById(req.params.insuredId);
         console.log("findOne insured: "+JSON.stringify(ins));
         if( ins ) {
             res.send(ins);
@@ -71,11 +65,9 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     try {
         console.log("update id: "+req.params.insuredId);
-        var ins = insuredList.find( i => i.id === req.params.insuredId );
-        console.log("update insured old: "+JSON.stringify(ins));
+        var ins = insuredRepository.update(req.params.insuredId,req.body);
         if( ins ) {
-            ins.name = req.body.name;
-            console.log("update insured new: "+JSON.stringify(ins));
+            console.log("update insured: "+JSON.stringify(ins));
             res.send(ins);
         } else {
             res.status(404).send({
@@ -94,13 +86,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     try {
         console.log("delete id: "+req.params.insuredId);
-        var deleted = false;
-        insuredList.forEach( (element,index) => {
-            if(element.id === req.params.insuredId) {
-                insuredList.splice(index,1);
-                deleted = true;
-            }
-        });
+        var deleted = insuredRepository.delete(req.params.insuredId);
         if( deleted ) {
             res.status(200).send();
         } else {
