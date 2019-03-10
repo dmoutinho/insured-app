@@ -4,19 +4,22 @@ const insuredRepository = require('../models/insured.repository.model.js');
 // Create and Save a new Insured
 exports.create = (req, res) => {
     try {
+
+        var ins = new Insured(req.body.name);       
         
         // Validate request
-        if(!req.body.name) {
+        var erros = ins.validate();
+        if(erros.length>0) {
             return res.status(400).send({
-                message: "Insured name can not be empty"
+                message: erros
             });
         }
 
-        var ins = insuredRepository.create(new Insured(req.body.name));
+        insuredRepository.create(ins);
 
         console.log("create: "+JSON.stringify(ins));
 
-        res.send(ins);
+        res.status(200).send(ins);
 
     } catch (error) {
         console.log("create error: "+error.message);
@@ -31,7 +34,7 @@ exports.findAll = (req, res) => {
     try {
         var all = insuredRepository.findAll();
         console.log("findAll: "+JSON.stringify(all));
-        res.send(all);
+        res.status(200).send(all);
     } catch (error) {
         console.log("findAll error: "+error.message);
         res.status(500).send({
@@ -47,7 +50,7 @@ exports.findOne = (req, res) => {
         var ins = insuredRepository.findOneById(req.params.insuredId);
         console.log("findOne insured: "+JSON.stringify(ins));
         if( ins ) {
-            res.send(ins);
+            res.status(200).send(ins);
         } else {
             res.status(404).send({
                 message: "Insured not found with id " + req.params.insuredId
@@ -68,7 +71,7 @@ exports.update = (req, res) => {
         var ins = insuredRepository.update(req.params.insuredId,req.body);
         if( ins ) {
             console.log("update insured: "+JSON.stringify(ins));
-            res.send(ins);
+            res.status(200).send(ins);
         } else {
             res.status(404).send({
                 message: "Insured not found with id " + req.params.insuredId

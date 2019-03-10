@@ -8,6 +8,14 @@ module.exports = function(name) {
 
 	    insured.name = name;
 
+	    insured.validate = () => {
+	    	var erros = Array();
+		    if(!insured.name) {
+		    	erros.push("Insured name can not be empty");
+	        }
+	        return erros;
+	    };
+
 	    return insured;
 
 };
