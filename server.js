@@ -12,7 +12,7 @@ app.use(bodyParser.json())
 
 // define a simple route
 app.get('/', (req, res) => {
-    res.json({"message": "Welcome to insured-app."});
+    res.json({"message": "Welcome to insured-app!"});
 });
 
 require('./app/routes/insured.routes.js')(app);

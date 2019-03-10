@@ -21,12 +21,12 @@ exports.create = (req, res) => {
 
         insuredList[insuredList.length] = ins;
 
-        console.log("create: "+insuredList);
+        console.log("create: "+JSON.stringify(insuredList));
 
         res.send(ins);
 
     } catch (error) {
-        console.log("findAll error: "+error.message);
+        console.log("create error: "+error.message);
         res.status(500).send({
             message: "Some error occurred!"
         });               
@@ -36,7 +36,7 @@ exports.create = (req, res) => {
 // Retrieve and return all Insured from the database.
 exports.findAll = (req, res) => {
     try {
-        console.log("findAll: "+insuredList);
+        console.log("findAll: "+JSON.stringify(insuredList));
         res.send(insuredList);
     } catch (error) {
         console.log("findAll error: "+error.message);
@@ -51,7 +51,7 @@ exports.findOne = (req, res) => {
     try {
         console.log("findOne id: "+req.params.insuredId);
         var ins = insuredList.find( i => i.id === req.params.insuredId );
-        console.log("findOne insured: "+insured);
+        console.log("findOne insured: "+JSON.stringify(ins));
         if( ins ) {
             res.send(ins);
         } else {
@@ -72,9 +72,10 @@ exports.update = (req, res) => {
     try {
         console.log("update id: "+req.params.insuredId);
         var ins = insuredList.find( i => i.id === req.params.insuredId );
-        console.log("update insured: "+insured);
+        console.log("update insured old: "+JSON.stringify(ins));
         if( ins ) {
             ins.name = req.body.name;
+            console.log("update insured new: "+JSON.stringify(ins));
             res.send(ins);
         } else {
             res.status(404).send({
@@ -82,7 +83,7 @@ exports.update = (req, res) => {
             });    
         }        
     } catch (error) {
-        console.log("findOne error: "+error.message);
+        console.log("update error: "+error.message);
         res.status(500).send({
             message: "Some error occurred!"
         });        
@@ -92,7 +93,7 @@ exports.update = (req, res) => {
 // Delete a note with the specified insuredId in the request
 exports.delete = (req, res) => {
     try {
-        console.log("exports.delete id: "+req.params.insuredId);
+        console.log("delete id: "+req.params.insuredId);
         var deleted = false;
         insuredList.forEach( (element,index) => {
             if(element.id === req.params.insuredId) {
