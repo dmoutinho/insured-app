@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 });
 
 require('./app/routes/insured.routes.js')(app);
+require('./app/routes/proposal.routes.js')(app);
 
 // listen for requests
 app.listen(3000, () => {

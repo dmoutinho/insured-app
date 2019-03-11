@@ -106,32 +106,35 @@ exports.findAll = () => {
     }
 };
 
-function findOneById(id) {
+function findOneByUuid(uuid) {
     try {
-        return insuredList.find( i => i.id == id );
+        return insuredList.find( i => i.uuid == uuid );
     } catch (error) {
-        console.log("repository findOneById error: "+error.message);
+        console.log("repository findOneByUuid error: "+error.message);
     }
 };
-exports.findOneById = findOneById;
+exports.findOneByUuid = findOneByUuid; 
 
-exports.update = (id,insured) => {
+exports.update = (insured) => {
     try {
-        var ins = findOneById(id);
-        if(ins) {
-        	ins.name = insured.name;
+
+        var deleted = deleteByUuid(insured.uuid);
+        if(deleted) {
+            insuredList.push(insured);
+        	return insured;
+        } else {
+            return undefined;
         }
-        return ins;
     } catch (error) {
         console.log("repository update error: "+error.message);
     }
 };
 
-exports.delete = (id) => {
+function deleteByUuid(uuid) {
     try {
         var deleted = false;
         insuredList.forEach( (element,index) => {
-            if(element.id == id) {
+            if(element.uuid == uuid) {
                 insuredList.splice(index,1);
                 deleted = true;
             }
@@ -141,3 +144,4 @@ exports.delete = (id) => {
         console.log("delete error: "+error.message);
     }
 };
+exports.delete = deleteByUuid;

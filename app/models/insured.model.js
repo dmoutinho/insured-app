@@ -1,29 +1,33 @@
 const uuidv1 = require('uuid/v1'); 
 
-module.exports = function(firstName,lastName,document,birthday,contact,location,payment) {
+module.exports = function(insured) {
     
-	    this.id = uuidv1();
+	    this.uuid = uuidv1();
 
-	    this.firstName = firstName;
-	    this.lastName = lastName;
-		this.document = document;
-	    this.birthday = birthday;
+		if(insured) {
 
-	    this.contact = {};
-		this.contact.email = contact.email;
-		this.contact.phone = contact.phone;	    	    
-
-	    this.location = {};	    	
-		this.location.country = location.country;
-		this.location.state = location.state;
-		this.location.city = location.city;
-		this.location.street = location.street;
-		this.location.number = location.number;
-		this.location.code = location.code;
-
-		this.payment = {};
-		this.payment.cardNumber = payment.cardNumber; 
-		this.payment.valid = payment.valid;
+			this.firstName = insured.firstName;
+			this.lastName = insured.lastName;
+			this.document = insured.document;
+			this.birthday = insured.birthday;
+	
+			this.contact = {};
+			this.contact.email = insured.contact ? insured.contact.email : undefined;
+			this.contact.phone = insured.contact ? insured.contact.phone : undefined;	    	    
+	
+			this.location = {};	    	
+			this.location.country = insured.location ? insured.location.country : undefined;
+			this.location.state = insured.location ?  insured.location.state : undefined;
+			this.location.city = insured.location ? insured.location.city : undefined;
+			this.location.street = insured.location ? insured.location.street : undefined;
+			this.location.number = insured.location ? insured.location.number : undefined;
+			this.location.code = insured.location ? insured.location.code : undefined;
+	
+			this.payment = {};
+			this.payment.cardNumber = insured.payment ? insured.payment.cardNumber : undefined; 
+			this.payment.valid = insured.payment ? insured.payment.valid : undefined;
+	
+		}
 
 		this.validate = () => {
 	    	var erros = Array();

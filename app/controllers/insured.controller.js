@@ -5,7 +5,7 @@ const insuredRepository = require('../models/insured.repository.model.js');
 exports.create = (req, res) => {
     try {
 
-        var ins = new Insured(req.body.name);       
+        var ins = new Insured(req.body);       
         
         // Validate request
         var erros = ins.validate();
@@ -43,38 +43,60 @@ exports.findAll = (req, res) => {
     }
 };
 
-// Find a single note with a insuredId
-exports.findOne = (req, res) => {
+// Find a single note with a insuredUuid
+exports.findOneByUuid = (req, res) => {
     try {
-        console.log("findOne id: "+req.params.insuredId);
-        var ins = insuredRepository.findOneById(req.params.insuredId);
-        console.log("findOne insured: "+JSON.stringify(ins));
+        console.log("findOneByUuid uuid: "+req.params.insuredUuid);
+        var ins = insuredRepository.findOneByUuid(req.params.insuredUuid);
+        console.log("findOneByUuid insured: "+JSON.stringify(ins));
         if( ins ) {
             res.status(200).send(ins);
         } else {
             res.status(404).send({
-                message: "Insured not found with id " + req.params.insuredId
+                message: "Insured not found with uuid " + req.params.insuredUuid
             });    
         }        
     } catch (error) {
-        console.log("findOne error: "+error.message);
+        console.log("findOneByUuid error: "+error.message);
         res.status(500).send({
             message: "Some error occurred!"
         });        
     }
 };
 
-// Update a note identified by the insuredId in the request
+// Update a note identified by the insuredUuid in the request
 exports.update = (req, res) => {
     try {
-        console.log("update id: "+req.params.insuredId);
-        var ins = insuredRepository.update(req.params.insuredId,req.body);
+        console.log("update uuid: "+req.params.insuredUuid);
+        
+        req.body.uuid = req.params.insuredUuid;
+        
+        var ins = new Insured(req.body);
+
+        // Validate request
+       var erros = ins.validate();
+       if(erros.length>0) {
+           return res.status(400).send({
+               message: erros
+           });
+       } else {
+           ins = insuredRepository.update(new Insured(req.body));
+           if( ins ) {
+               console.log("update insured: "+JSON.stringify(ins));
+               res.status(200).send(ins);
+           } else {
+               res.status(404).send({
+                   message: "Insured not found with uuid " + req.params.proposalUuid
+               });    
+           }
+       }
+
         if( ins ) {
             console.log("update insured: "+JSON.stringify(ins));
             res.status(200).send(ins);
         } else {
             res.status(404).send({
-                message: "Insured not found with id " + req.params.insuredId
+                message: "Insured not found with uuid " + req.params.insuredUuid
             });    
         }        
     } catch (error) {
@@ -85,16 +107,16 @@ exports.update = (req, res) => {
     }
 };
 
-// Delete a note with the specified insuredId in the request
+// Delete a note with the specified insuredUuid in the request
 exports.delete = (req, res) => {
     try {
-        console.log("delete id: "+req.params.insuredId);
-        var deleted = insuredRepository.delete(req.params.insuredId);
+        console.log("delete uuid: "+req.params.insuredUuid);
+        var deleted = insuredRepository.delete(req.params.insuredUuid);
         if( deleted ) {
             res.status(200).send();
         } else {
             res.status(404).send({
-                message: "Insured not found with id " + req.params.insuredId
+                message: "Insured not found with uuid " + req.params.insuredUuid
             });    
         }        
     } catch (error) {

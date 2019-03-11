@@ -8,13 +8,13 @@ module.exports = (app) => {
     // Retrieve all Insured
     app.get('/insured', insuredController.findAll);
 
-    // Retrieve a single Insured with insuredId
-    app.get('/insured/:insuredId', insuredController.findOne);
+    // Retrieve a single Insured with insuredUuid
+    app.get('/insured/:insuredUuid', insuredController.findOneByUuid);
 
-    // Update a Insured with insuredId
-    app.put('/insured/:insuredId', insuredController.update);
+    // Update a Insured with insuredUuid
+    app.put('/insured/:insuredUuid', insuredController.update);
 
-    // Delete a Insured with insuredId
-    app.delete('/insured/:insuredId', insuredController.delete);
+    // Delete a Insured with insuredUuid
+    app.delete('/insured/:insuredUuid', insuredController.delete);
 
 }
