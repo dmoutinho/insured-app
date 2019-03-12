@@ -4,7 +4,8 @@
   "description": "CRUD for insured",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "node server.js & ./test/api/insured.js & fuser -k 3000/tcp && exit"
   },
   "keywords": [
     "express",
