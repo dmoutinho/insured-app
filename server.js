@@ -19,6 +19,8 @@ require('./app/routes/insured.routes.js')(app);
 require('./app/routes/proposal.routes.js')(app);
 
 // listen for requests
-app.listen(3000, () => {
+const server = app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
+
+module.exports = server;

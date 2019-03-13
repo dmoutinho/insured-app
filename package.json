@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node server.js & ./test/api/insured.js & fuser -k 3000/tcp && exit"
+    "test": "mocha ./test/test.js"
   },
   "keywords": [
     "express",
@@ -16,6 +16,10 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "request": "^2.88.0",
     "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "mocha": "^6.0.2"
   }
 }

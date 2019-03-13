@@ -69,10 +69,12 @@ exports.update = (req, res) => {
     try {
         console.log("update uuid: "+req.params.insuredUuid);
         
-        req.body.uuid = req.params.insuredUuid;
-        
-        var ins = new Insured(req.body);
+        let body = req.body;
 
+        console.log("=====>    "+body.uuid);
+        
+        var ins = new Insured(body);
+        ins.uuid = req.params.insuredUuid;
         // Validate request
        var erros = ins.validate();
        if(erros.length>0) {
@@ -80,23 +82,23 @@ exports.update = (req, res) => {
                message: erros
            });
        } else {
-           ins = insuredRepository.update(new Insured(req.body));
+           ins = insuredRepository.update(ins);
            if( ins ) {
                console.log("update insured: "+JSON.stringify(ins));
-               res.status(200).send(ins);
+               return res.status(200).send(ins);
            } else {
-               res.status(404).send({
-                   message: "Insured not found with uuid " + req.params.proposalUuid
+               return res.status(404).send({
+                   message: "1 Insured not found with uuid " + req.params.insuredUuid
                });    
            }
        }
 
         if( ins ) {
             console.log("update insured: "+JSON.stringify(ins));
-            res.status(200).send(ins);
+            return res.status(200).send(ins);
         } else {
-            res.status(404).send({
-                message: "Insured not found with uuid " + req.params.insuredUuid
+            return res.status(404).send({
+                message: " 2 Insured not found with uuid " + req.params.insuredUuid
             });    
         }        
     } catch (error) {
