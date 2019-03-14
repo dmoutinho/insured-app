@@ -1,3 +1,5 @@
+const LogBuilder = require('./app/log/log-builder.js');
+const log = new LogBuilder(__filename);
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -20,7 +22,7 @@ require('./app/routes/proposal.routes.js')(app);
 
 // listen for requests
 const server = app.listen(3000, () => {
-    console.log("Server is listening on port 3000");
+    log.debug("Server is listening on port 3000");
 });
 
 module.exports = server;

@@ -24,7 +24,7 @@ module.exports = function(proposal) {
 		this.status = 0;
 
 	} catch (error) {
-		console.log("proposal.model error: "+error.message);
+		log.debug("proposal.model error: "+error.message);
 	}
 		
 	this.validate = () => {

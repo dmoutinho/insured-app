@@ -1,5 +1,6 @@
+const LogBuilder = require('../log/log-builder.js');
+const log = new LogBuilder(__filename);
 const Insured = require('./insured.model.js');
-
 const insuredList = new Array();
 
 insuredList.push(new Insured({
@@ -97,7 +98,7 @@ exports.create = (insured) => {
 	    insuredList.push(insured);
 	    return insured;
     } catch (error) {
-        console.log("repository create error: "+error.message);
+        log.debug("repository create error: "+error.message);
     }
 };
 
@@ -105,7 +106,7 @@ exports.findAll = () => {
     try {
     	return insuredList;
     } catch (error) {
-        console.log("repository findAll error: "+error.message);
+        log.debug("repository findAll error: "+error.message);
     }
 };
 
@@ -113,7 +114,7 @@ function findOneByUuid(uuid) {
     try {
         return insuredList.find( i => i.uuid == uuid );
     } catch (error) {
-        console.log("repository findOneByUuid error: "+error.message);
+        log.debug("repository findOneByUuid error: "+error.message);
     }
 };
 exports.findOneByUuid = findOneByUuid; 
@@ -122,8 +123,8 @@ exports.update = (insured) => {
     try {
 
         var deleted = deleteByUuid(insured.uuid);
-        console.log("===> deleted "+deleted);
-        console.log("===> insured.uuid "+insured.uuid);
+        log.debug("===> deleted "+deleted);
+        log.debug("===> insured.uuid "+insured.uuid);
         if(deleted) {
             insuredList.push(insured);
         	return insured;
@@ -131,17 +132,17 @@ exports.update = (insured) => {
             return undefined;
         }
     } catch (error) {
-        console.log("repository update error: "+error.message);
+        log.debug("repository update error: "+error.message);
     }
 };
 
 function deleteByUuid(uuid) {
     try {
         var deleted = false;
-        console.log("for uuid: "+uuid);
+        log.debug("for uuid: "+uuid);
         insuredList.forEach( (element,index) => {
-            console.log("for uuid: "+element.uuid);
-            console.log("compare: "+element.uuid == uuid);
+            log.debug("for uuid: "+element.uuid);
+            log.debug("compare: "+element.uuid == uuid);
             if(element.uuid == uuid) {
                 insuredList.splice(index,1);
                 deleted = true;
@@ -149,7 +150,7 @@ function deleteByUuid(uuid) {
         });
         return deleted;
     } catch (error) {
-        console.log("delete error: "+error.message);
+        log.debug("delete error: "+error.message);
     }
 };
 exports.delete = deleteByUuid;

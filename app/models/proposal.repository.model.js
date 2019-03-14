@@ -5,7 +5,7 @@ exports.create = (proposal) => {
 	    proposalList.push(proposal);
 	    return proposal;
     } catch (error) {
-        console.log("repository create error: "+error.message);
+        log.debug("repository create error: "+error.message);
     }
 };
 
@@ -13,7 +13,7 @@ exports.findAll = () => {
     try {
     	return proposalList;
     } catch (error) {
-        console.log("repository findAll error: "+error.message);
+        log.debug("repository findAll error: "+error.message);
     }
 };
 
@@ -21,7 +21,7 @@ function findOneByUuid(uuid) {
     try {
         return proposalList.find( i => i.uuid == uuid );
     } catch (error) {
-        console.log("repository findOneByUuid error: "+error.message);
+        log.debug("repository findOneByUuid error: "+error.message);
     }
 };
 exports.findOneByUuid = findOneByUuid;
@@ -36,7 +36,7 @@ exports.update = (proposal) => {
             return undefined;
         }
     } catch (error) {
-        console.log("repository update error: "+error.message);
+        log.debug("repository update error: "+error.message);
     }
 };
 
@@ -51,7 +51,7 @@ function deleteByUuid(uuid) {
         });
         return deleted;
     } catch (error) {
-        console.log("delete error: "+error.message);
+        log.debug("delete error: "+error.message);
     }
 };
 exports.delete = deleteByUuid;

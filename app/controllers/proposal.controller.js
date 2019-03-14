@@ -17,12 +17,12 @@ exports.create = (req, res) => {
 
         proposalRepository.create(prop);
 
-        console.log("create: "+JSON.stringify(prop));
+        log.debug("create: "+JSON.stringify(prop));
 
         res.status(200).send(prop);
 
     } catch (error) {
-        console.log("create error: "+error.message);
+        log.debug("create error: "+error.message);
         res.status(500).send({
             message: "Some error occurred!"
         });               
@@ -33,10 +33,10 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     try {
         var all = proposalRepository.findAll();
-        console.log("findAll: "+JSON.stringify(all));
+        log.debug("findAll: "+JSON.stringify(all));
         res.status(200).send(all);
     } catch (error) {
-        console.log("findAll error: "+error.message);
+        log.debug("findAll error: "+error.message);
         res.status(500).send({
             message: "Some error occurred!"
         });        
@@ -46,9 +46,9 @@ exports.findAll = (req, res) => {
 // Find a single note with a proposalUuid
 exports.findOneByUuid = (req, res) => {
     try {
-        console.log("findOneByUuid uuid: "+req.params.proposalUuid);
+        log.debug("findOneByUuid uuid: "+req.params.proposalUuid);
         var prop = proposalRepository.findOneByUuid(req.params.proposalUuid);
-        console.log("findOneByUuid proposal: "+JSON.stringify(prop));
+        log.debug("findOneByUuid proposal: "+JSON.stringify(prop));
         if( prop ) {
             res.status(200).send(prop);
         } else {
@@ -57,7 +57,7 @@ exports.findOneByUuid = (req, res) => {
             });    
         }        
     } catch (error) {
-        console.log("findOneByUuid error: "+error.message);
+        log.debug("findOneByUuid error: "+error.message);
         res.status(500).send({
             message: "Some error occurred!"
         });        
@@ -68,7 +68,7 @@ exports.findOneByUuid = (req, res) => {
 exports.update = (req, res) => {
     try {
 
-        console.log("update uuid: "+req.params.proposalUuid);
+        log.debug("update uuid: "+req.params.proposalUuid);
         var prop = new Proposal(req.body);
 
         // Validate request
@@ -80,7 +80,7 @@ exports.update = (req, res) => {
         } else {
            prop = proposalRepository.update(prop);
             if( prop ) {
-                console.log("update proposal: "+JSON.stringify(prop));
+                log.debug("update proposal: "+JSON.stringify(prop));
                 res.status(200).send(prop);
             } else {
                 res.status(404).send({
@@ -90,7 +90,7 @@ exports.update = (req, res) => {
         }
    
     } catch (error) {
-        console.log("update error: "+error.message);
+        log.debug("update error: "+error.message);
         res.status(500).send({
             message: "Some error occurred!"
         });        
@@ -100,12 +100,12 @@ exports.update = (req, res) => {
 // approve, decline, analyze
 exports.updateStatus = (req, res) => {
     try {
-        console.log("updateStatus uuid: "+req.params.proposalUuid);
+        log.debug("updateStatus uuid: "+req.params.proposalUuid);
         var prop = proposalRepository.findOneByUuid(req.params.proposalUuid);
-        console.log("updateStatus proposal: "+JSON.stringify(prop));
+        log.debug("updateStatus proposal: "+JSON.stringify(prop));
         if( prop ) {
             var statusChange = req.params.statusChange;
-            console.log("updateStatus statusChange: "+statusChange);
+            log.debug("updateStatus statusChange: "+statusChange);
             switch (key) {
                 case "approve":
                     prop.approve();
@@ -120,7 +120,7 @@ exports.updateStatus = (req, res) => {
 
             prop = proposalRepository.update(prop);
             if( prop ) {
-                console.log("update proposal: "+JSON.stringify(prop));
+                log.debug("update proposal: "+JSON.stringify(prop));
                 res.status(200).send(prop);
             } else {
                 res.status(404).send({
@@ -134,7 +134,7 @@ exports.updateStatus = (req, res) => {
             });    
         }        
     } catch (error) {
-        console.log("updateStatus error: "+error.message);
+        log.debug("updateStatus error: "+error.message);
         res.status(500).send({
             message: "Some error occurred!"
         });        
@@ -145,7 +145,7 @@ exports.updateStatus = (req, res) => {
 // Delete a note with the specified proposalUuid in the request
 exports.delete = (req, res) => {
     try {
-        console.log("delete id: "+req.params.proposalUuid);
+        log.debug("delete id: "+req.params.proposalUuid);
         var deleted = proposalRepository.delete(req.params.proposalUuid);
         if( deleted ) {
             res.status(200).send();
@@ -155,7 +155,7 @@ exports.delete = (req, res) => {
             });    
         }        
     } catch (error) {
-        console.log("delete error: "+error.message);
+        log.debug("delete error: "+error.message);
         res.status(500).send({
             message: "Some error occurred!"
         });        

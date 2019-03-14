@@ -1,11 +1,11 @@
 {
   "name": "insured-app",
   "version": "1.0.0",
-  "description": "CRUD for insured",
+  "description": "Example of initiating insurance.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha ./test/test.js"
+    "test": "mocha ./test/init.js"
   },
   "keywords": [
     "express",
