@@ -34,6 +34,11 @@ exports.create = (req, res) => {
 // Retrieve and return all Insured from the database.
 exports.findAll = (req, res) => {
     try {
+        console.log("=====>"+req.baseUrl);
+        console.log("=====>"+req.path);
+        console.log("=====>"+req.rout);
+
+
         var all = insuredRepository.findAll();
         log.debug("findAll: "+JSON.stringify(all));
         res.status(200).send(all);

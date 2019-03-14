@@ -1,20 +1,21 @@
 module.exports = (app) => {
 
-    const insuredController = require('../controllers/insured.controller.js');
+    const genericController = require('../controllers/generic.controller.js');
+    //const insuredController = require('../controllers/insured.controller.js');
 
     // Create a new Insured
-    app.post('/insured', insuredController.create);
+    app.post('/insured', genericController.create);
 
     // Retrieve all Insured
-    app.get('/insured', insuredController.findAll);
+    app.get('/insured', genericController.findAll);
 
     // Retrieve a single Insured with insuredUuid
-    app.get('/insured/:insuredUuid', insuredController.findOneByUuid);
+    app.get('/insured/:uuid', genericController.findOneByUuid);
 
     // Update a Insured with insuredUuid
-    app.put('/insured/:insuredUuid', insuredController.update);
+    app.put('/insured/:uuid', genericController.update);
 
     // Delete a Insured with insuredUuid
-    app.delete('/insured/:insuredUuid', insuredController.delete);
+    app.delete('/insured/:uuid', genericController.delete);
 
 }
