@@ -72,9 +72,7 @@ exports.update = (req, res) => {
         log.debug("update uuid: "+req.params.insuredUuid);
         
         let body = req.body;
-
-        log.debug("=====>    "+body.uuid);
-        
+       
         var ins = new Insured(body);
         ins.uuid = req.params.insuredUuid;
         // Validate request

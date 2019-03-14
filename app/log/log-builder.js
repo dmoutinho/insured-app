@@ -1,7 +1,7 @@
 function LogBuilder(moduleName) {
     this.moduleName = moduleName;
-    this.mode = 0;
-    //this.mode = 1;
+    //this.mode = 0;
+    this.mode = 1;
 }
 
 LogBuilder.prototype.buildMessage = function buildMessage(message) {

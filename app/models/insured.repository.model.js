@@ -123,8 +123,6 @@ exports.update = (insured) => {
     try {
 
         var deleted = deleteByUuid(insured.uuid);
-        log.debug("===> deleted "+deleted);
-        log.debug("===> insured.uuid "+insured.uuid);
         if(deleted) {
             insuredList.push(insured);
         	return insured;
@@ -139,10 +137,7 @@ exports.update = (insured) => {
 function deleteByUuid(uuid) {
     try {
         var deleted = false;
-        log.debug("for uuid: "+uuid);
         insuredList.forEach( (element,index) => {
-            log.debug("for uuid: "+element.uuid);
-            log.debug("compare: "+element.uuid == uuid);
             if(element.uuid == uuid) {
                 insuredList.splice(index,1);
                 deleted = true;
