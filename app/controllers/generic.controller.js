@@ -18,7 +18,6 @@ function getModel(path,body) {
 exports.create = (req, res) => {
     try {
         var model = getModel(req.path,req.body); 
-        console.log("===> "+model);
         // Validate request
         var erros = model.validate();
         if(erros.length>0) {
@@ -79,6 +78,7 @@ exports.update = (req, res) => {
         let body = req.body;
         let model = getModel(req.path,body);
         model.uuid = req.params.uuid;
+
         // Validate request
        var erros = model.validate();
        if(erros.length>0) {

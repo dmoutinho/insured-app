@@ -93,7 +93,7 @@ const Proposal = require('../../app/models/proposal.model.js');
         });
     });
 
-    let proposalUpdate = new Proposal({
+    let proposalUpdate = {
         insuredUuid : "1111",
         car : {
             plate : "AZD-9999",
@@ -108,7 +108,7 @@ const Proposal = require('../../app/models/proposal.model.js');
             start : "2019-04-17", 
             end : "2020-04-17"
         }
-    });
+    };
 
     //Update not found
     request.put('http://localhost:3000/proposal/123', { json: proposalUpdate }, (err, res, body) => {
@@ -117,7 +117,7 @@ const Proposal = require('../../app/models/proposal.model.js');
         assert.equal(res.statusCode,404);
     });
 
-    //Update specific insured
+    // //Update specific insured
     // request('http://localhost:3000/proposal', { json: true }, (err, res, body) => {
     //     if (err) assert.fail(err);
     //     let uuid = body[0].uuid;
