@@ -1,18 +1,22 @@
 module.exports = (app) => {
 
+    const genericController = require('../controllers/generic.controller.js');
     const proposalController = require('../controllers/proposal.controller.js');
 
     // Create a new Proposal
-    app.post('/proposal', proposalController.create);
+    app.post('/proposal', genericController.create);
 
     // Retrieve all Proposal
-    app.get('/proposal', proposalController.findAll);
+    app.get('/proposal', genericController.findAll);
 
     // Retrieve a single Proposal with proposalUuid
-    app.get('/proposal/:proposalUuid', proposalController.findOneByUuid);
+    app.get('/proposal/:uuid', genericController.findOneByUuid);
 
     // Update a Insured with proposalUuid
-    app.put('/proposal/:proposalUuid', proposalController.update);
+    app.put('/proposal/:uuid', genericController.update);
+
+    // Delete a Insured with proposalUuid
+    app.delete('/proposal/:uuid', genericController.delete);
 
     // Approve
     app.put('/proposal/:proposalUuid/:statusChange', proposalController.updateStatus);
@@ -22,8 +26,5 @@ module.exports = (app) => {
 
     // Analyze
     app.put('/proposal/:proposalUuid/:statusChange', proposalController.updateStatus);
-
-    // Delete a Insured with proposalUuid
-    app.delete('/proposal/:proposalUuid', proposalController.delete);
 
 }

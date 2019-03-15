@@ -4,6 +4,8 @@ const log = new LogBuilder(__filename);
 function getRepository(path) {
     if(path.includes("insured")) {
         return require('../models/insured.repository.model.js');
+    } else if(path.includes("proposal")) {
+        return require('../models/proposal.repository.model.js');
     }
 }
 
@@ -11,6 +13,10 @@ function getModel(path,body) {
     if(path.includes("insured")) {
         let Insured = require('../models/insured.model.js');
         return new Insured(body);
+    } else if (path.includes("proposal")) {
+        let Proposal = require('../models/proposal.model.js');
+        console.log("=====> ..."+JSON.stringify(new Proposal(body)));
+        return new Proposal(body);
     }
 }
 
