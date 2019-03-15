@@ -12,7 +12,7 @@ const request = require('request');
     //Get not found
     request('http://localhost:3000/insured/123', { json: true }, (err, res, body) => {
         if (err) assert.fail(err);
-        assert.equal(body.message.includes("not found"),true);
+        assert.equal(body.message.includes("Not found"),true);
         assert.equal(res.statusCode,404);
     });
 
@@ -30,7 +30,7 @@ const request = require('request');
     //Delete not found
     request.del('http://localhost:3000/insured/123', { json: true }, (err, res, body) => {
         if (err) assert.fail(err);
-        assert.equal(body.message.includes("not found"),true);
+        assert.equal(body.message.includes("Not found"),true);
         assert.equal(res.statusCode,404);
     });
 
@@ -43,7 +43,7 @@ const request = require('request');
             assert.equal(res.statusCode,200);
             request('http://localhost:3000/insured/'+uuid, { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
-                assert.equal(body.message.includes("not found"),true);
+                assert.equal(body.message.includes("Not found"),true);
                 assert.equal(res.statusCode,404);
             });
         });
@@ -76,7 +76,7 @@ const request = require('request');
     //Update not found
     request.put('http://localhost:3000/insured/123', { json: data }, (err, res, body) => {
         if (err) assert.fail(err);
-        assert.equal(body.message.includes("not found"),true);
+        assert.equal(body.message.includes("Not found"),true);
         assert.equal(res.statusCode,404);
     });
 
