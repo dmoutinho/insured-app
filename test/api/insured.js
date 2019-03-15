@@ -6,7 +6,8 @@ const request = require('request');
     //List
     request('http://localhost:3000/insured', { json: true }, (err, res, body) => {
         if (err) assert.fail(err);
-        assert.ok(res.statusCode,200);
+        assert.ok(body.length>0)
+        assert.equal(res.statusCode,200);
     });
 
     //Get not found
