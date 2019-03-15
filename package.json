@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha ./test/init.js"
+    "test": "mocha ./test/init.test.js"
   },
   "keywords": [
     "express",
