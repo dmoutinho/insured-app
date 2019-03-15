@@ -41,9 +41,7 @@ module.exports = function(proposal) {
 		if(!this.validity) {
 			erros.push("Insured validity can not be empty.");
 		}
-		if(!this.status) {
-			erros.push("Insured status can not be empty.");
-		}
+		return erros;
 	};
 
 	this.approve = () => {

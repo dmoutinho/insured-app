@@ -1,4 +1,24 @@
+
+const Proposal = require('./proposal.model.js');
+const uuidv1 = require('uuid/v1'); 
 const proposalList = new Array();
+
+proposalList.push(new Proposal({
+    insuredUuid : uuidv1(),
+    car : {
+        plate : "AZD-9897",
+        chassis : "87sf8a9fdfa8d98f7asd987f9sd",    	    
+        year :	"2010",
+        model :	"Audi A3"
+    },
+    payment : {
+        price : "10000.00"
+    },	    	
+    validity : {
+        start : "2019-03-15", 
+        end : "2020-03-15"
+    }
+}));
 
 exports.create = (proposal) => {
     try {

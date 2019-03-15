@@ -1,3 +1,5 @@
+const LogBuilder = require('../log/log-builder.js');
+const log = new LogBuilder(__filename);
 const Proposal = require('../models/proposal.model.js');
 const proposalRepository = require('../models/proposal.repository.model.js');
 
@@ -33,7 +35,6 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     try {
         var all = proposalRepository.findAll();
-        log.debug("findAll: "+JSON.stringify(all));
         res.status(200).send(all);
     } catch (error) {
         log.debug("findAll error: "+error.message);
@@ -53,7 +54,7 @@ exports.findOneByUuid = (req, res) => {
             res.status(200).send(prop);
         } else {
             res.status(404).send({
-                message: "Proposal not found with uuid " + req.params.proposalUuid
+                message: "Not found with uuid " + req.params.proposalUuid
             });    
         }        
     } catch (error) {
@@ -84,7 +85,7 @@ exports.update = (req, res) => {
                 res.status(200).send(prop);
             } else {
                 res.status(404).send({
-                    message: "Proposal not found with uuid " + req.params.proposalUuid
+                    message: "Not found with uuid " + req.params.proposalUuid
                 });    
             }
         }
@@ -124,13 +125,13 @@ exports.updateStatus = (req, res) => {
                 res.status(200).send(prop);
             } else {
                 res.status(404).send({
-                    message: "Proposal not found with uuid " + req.params.proposalUuid
+                    message: "Not found with uuid " + req.params.proposalUuid
                 });    
             }
 
         } else {
             res.status(404).send({
-                message: "Proposal not found with uuid " + req.params.proposalUuid
+                message: "Not found with uuid " + req.params.proposalUuid
             });    
         }        
     } catch (error) {
@@ -151,7 +152,7 @@ exports.delete = (req, res) => {
             res.status(200).send();
         } else {
             res.status(404).send({
-                message: "Proposal not found with uuid " + req.params.proposalUuid
+                message: "Not found with uuid " + req.params.proposalUuid
             });    
         }        
     } catch (error) {
