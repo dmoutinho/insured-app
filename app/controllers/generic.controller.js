@@ -15,7 +15,6 @@ function getModel(path,body) {
         return new Insured(body);
     } else if (path.includes("proposal")) {
         let Proposal = require('../models/proposal.model.js');
-        console.log("=====> ..."+JSON.stringify(new Proposal(body)));
         return new Proposal(body);
     }
 }
@@ -23,9 +22,9 @@ function getModel(path,body) {
 // Create and Save new
 exports.create = (req, res) => {
     try {
-        var model = getModel(req.path,req.body); 
+        let model = getModel(req.path,req.body); 
         // Validate request
-        var erros = model.validate();
+        let erros = model.validate();
         if(erros.length>0) {
             return res.status(400).send({
                 message: erros
@@ -45,7 +44,7 @@ exports.create = (req, res) => {
 // Retrieve and return all
 exports.findAll = (req, res) => {
     try {
-        var all = getRepository(req.path).findAll();
+        let all = getRepository(req.path).findAll();
         log.debug("findAll: "+JSON.stringify(all));
         res.status(200).send(all);
     } catch (error) {
@@ -60,7 +59,7 @@ exports.findAll = (req, res) => {
 exports.findOneByUuid = (req, res) => {
     try {
         log.debug("findOneByUuid uuid: "+req.params.uuid);
-        var model = getRepository(req.path).findOneByUuid(req.params.uuid);
+        let model = getRepository(req.path).findOneByUuid(req.params.uuid);
         log.debug("findOneByUuid: "+JSON.stringify(model));
         if(model) {
             res.status(200).send(model);
@@ -86,7 +85,7 @@ exports.update = (req, res) => {
         model.uuid = req.params.uuid;
 
         // Validate request
-       var erros = model.validate();
+       let erros = model.validate();
        if(erros.length>0) {
            return res.status(400).send({
                message: erros
@@ -114,7 +113,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     try {
         log.debug("delete uuid: "+req.params.uuid);
-        var deleted = getRepository(req.path).delete(req.params.uuid);
+        let deleted = getRepository(req.path).delete(req.params.uuid);
         if(deleted) {
             res.status(200).send();
         } else {

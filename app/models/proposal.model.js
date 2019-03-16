@@ -23,7 +23,7 @@ function Proposal(proposal) {
 }
 
 Proposal.prototype.validate = function() {
-	var erros = Array();
+	let erros = Array();
 	if(!this.insuredUuid) {
 		erros.push("Insured insuredUuid can not be empty.");
 	}

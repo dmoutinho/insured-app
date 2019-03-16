@@ -7,10 +7,10 @@ const proposalRepository = require('../models/proposal.repository.model.js');
 exports.updateStatus = (req, res) => {
     try {
         log.debug("updateStatus uuid: "+req.params.proposalUuid);
-        var prop = proposalRepository.findOneByUuid(req.params.proposalUuid);
+        let prop = proposalRepository.findOneByUuid(req.params.proposalUuid);
         log.debug("updateStatus proposal: "+JSON.stringify(prop));
         if( prop ) {
-            var statusChange = req.params.statusChange;
+            let statusChange = req.params.statusChange;
             log.debug("updateStatus statusChange: "+statusChange);
             switch (key) {
                 case "approve":

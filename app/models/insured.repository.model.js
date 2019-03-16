@@ -122,7 +122,7 @@ exports.findOneByUuid = findOneByUuid;
 exports.update = (insured) => {
     try {
 
-        var deleted = deleteByUuid(insured.uuid);
+        let deleted = deleteByUuid(insured.uuid);
         if(deleted) {
             insuredList.push(insured);
         	return insured;
@@ -136,7 +136,7 @@ exports.update = (insured) => {
 
 function deleteByUuid(uuid) {
     try {
-        var deleted = false;
+        let deleted = false;
         insuredList.forEach( (element,index) => {
             if(element.uuid == uuid) {
                 insuredList.splice(index,1);

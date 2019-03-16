@@ -29,7 +29,7 @@ function Insured(insured) {
 }
 
 Insured.prototype.validate = function() {
-	var erros = Array();
+	let erros = Array();
 	if(!this.firstName) {
 		erros.push("Insured firstName can not be empty.");
 	}

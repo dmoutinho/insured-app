@@ -48,7 +48,7 @@ exports.findOneByUuid = findOneByUuid;
 
 exports.update = (proposal) => {
     try {
-        var deleted = deleteByUuid(proposal.uuid);
+        let deleted = deleteByUuid(proposal.uuid);
         if(deleted) {
             proposalList.push(proposal);
         	return proposal;
@@ -62,7 +62,7 @@ exports.update = (proposal) => {
 
 function deleteByUuid(uuid) {
     try {
-        var deleted = false;
+        let deleted = false;
         proposalList.forEach( (element,index) => {
             if(element.uuid == uuid) {
                 proposalList.splice(index,1);
