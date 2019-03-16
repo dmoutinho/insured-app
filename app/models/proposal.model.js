@@ -1,4 +1,50 @@
-const uuidv1 = require('uuid/v1'); 
+const uuidv1 = require('uuid/v1');
+const validate = require("validate.js");
+const validateUtils = require("../utils/validate.utils");
+
+let carConstraints = {
+	plate : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	chassis : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	year : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	model : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	}
+};
+
+let paymentConstraints = {
+	price : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	}
+};
+
+let validityConstraints = {
+	start : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	end : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	}
+};
 
 function Proposal(proposal) {
 	this.uuid = uuidv1();
@@ -23,19 +69,10 @@ function Proposal(proposal) {
 }
 
 Proposal.prototype.validate = function() {
-	let erros = Array();
-	if(!this.insuredUuid) {
-		erros.push("Insured insuredUuid can not be empty.");
-	}
-	if(!this.car) {
-		erros.push("Insured car can not be empty.");
-	}
-	if(!this.payment) {
-		erros.push("Insured payment can not be empty.");
-	}
-	if(!this.validity) {
-		erros.push("Insured validity can not be empty.");
-	}
+	let erros = [];
+	erros = erros.concat(validateUtils.concatMessages(validate(this.car,carConstraints)));
+	erros = erros.concat(validateUtils.concatMessages(validate(this.payment,paymentConstraints)));
+	erros = erros.concat(validateUtils.concatMessages(validate(this.validity,validityConstraints)));
 	return erros;
 };
 
