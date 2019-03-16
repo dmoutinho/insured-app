@@ -1,4 +1,98 @@
 const uuidv1 = require('uuid/v1'); 
+const validate = require("validate.js");
+const validateUtils = require("../utils/validate.utils");
+
+let insuredConstraints = {
+	firstName : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		},
+		length: {
+			minimum: 2,
+			maximum: 15,
+			message: validateUtils.CONST.MIN_MAX
+		}
+	},
+	lastName : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		},
+		length: {
+			minimum: 2,
+			maximum: 15,
+			message: validateUtils.CONST.MIN_MAX
+		}
+	},
+	document : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	birthday : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	}
+};
+
+let contactConstraints = {
+	email : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	phone : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	}
+};
+
+let locationConstraints = {
+	country : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	state : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	city : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	street : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	number : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	code : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	}
+};
+
+let paymentConstraints = {
+	cardNumber : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	},
+	valid : {
+		presence : { 
+			message: validateUtils.CONST.REQUIRED
+		}
+	}
+};
 
 function Insured(insured) {
 	this.uuid = uuidv1();
@@ -29,28 +123,11 @@ function Insured(insured) {
 }
 
 Insured.prototype.validate = function() {
-	let erros = Array();
-	if(!this.firstName) {
-		erros.push("Insured firstName can not be empty.");
-	}
-	if(!this.lastName) {
-		erros.push("Insured lastName can not be empty.");
-	}
-	if(!this.document) {
-		erros.push("Insured document can not be empty.");
-	}
-	if(!this.birthday) {
-		erros.push("Insured birthday can not be empty.");
-	}
-	if(!this.contact) {
-		erros.push("Insured contact can not be empty.");
-	}
-	if(!this.location) {
-		erros.push("Insured location can not be empty.");	
-	}
-	if(!this.payment) {
-		erros.push("Insured payment can not be empty.");
-	}
+	let erros = [];
+	erros = erros.concat(validateUtils.concatMessages(validate(this,insuredConstraints)));
+	erros = erros.concat(validateUtils.concatMessages(validate(this.contact,contactConstraints)));
+	erros = erros.concat(validateUtils.concatMessages(validate(this.location,locationConstraints)));
+	erros = erros.concat(validateUtils.concatMessages(validate(this.payment,paymentConstraints))); 
 	return erros;
 };
 
