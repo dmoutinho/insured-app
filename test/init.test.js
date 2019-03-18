@@ -1,6 +1,6 @@
 const LogBuilder = require('../app/log/log-builder.js');
 const log = new LogBuilder(__filename);
-const server = require('../server.js');
+const server = require('../server.js').server;
 
 describe("insured-app",function(){
     require('./insured.model.test.js');

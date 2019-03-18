@@ -1,6 +1,7 @@
 const assert = require('assert');
 const request = require('request');
 const Proposal = require('../../app/models/proposal.model.js');
+const apiEndpoint = require('../../server').apiEndpoint;
 
 function getProposal() {
     return {
@@ -42,10 +43,10 @@ function getProposal2() {
 describe('proposal api', function() {
     describe('create and get', function() {
         it('should create and return a proposal', function(done) {
-            request.post('http://localhost:3000/proposal', { json: getProposal() }, (err, res, body) => {
+            request.post(apiEndpoint+'/proposal', { json: getProposal() }, (err, res, body) => {
                 if (err) assert.fail(err);
                 let uuid = body.uuid;
-                request.get('http://localhost:3000/proposal/'+uuid, { json: true }, (err, res, body) => {
+                request.get(apiEndpoint+'/proposal/'+uuid, { json: true }, (err, res, body) => {
                     if (err) assert.fail(err);
         
                     assert.equal(body.car.plate,"AZD-9897");
@@ -68,7 +69,7 @@ describe('proposal api', function() {
     });
     describe('list', function() {
         it('should return all proposal', function(done) {
-            request('http://localhost:3000/proposal', { json: true }, (err, res, body) => {
+            request(apiEndpoint+'/proposal', { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
                 assert.ok(body.length>0)
                 assert.equal(res.statusCode,200);
@@ -78,7 +79,7 @@ describe('proposal api', function() {
     });
     describe('get not found', function() {
         it('should return not found', function(done) {
-            request('http://localhost:3000/proposal/123', { json: true }, (err, res, body) => {
+            request(apiEndpoint+'/proposal/123', { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
                 assert.equal(body.message.includes("Not found"),true);
                 assert.equal(res.statusCode,404);
@@ -88,7 +89,7 @@ describe('proposal api', function() {
     });
     describe('delete not found', function() {
         it('should return not found', function(done) {
-            request.del('http://localhost:3000/proposal/123', { json: true }, (err, res, body) => {
+            request.del(apiEndpoint+'/proposal/123', { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
                 assert.equal(body.message.includes("Not found"),true);
                 assert.equal(res.statusCode,404);
@@ -98,13 +99,13 @@ describe('proposal api', function() {
     });
     describe('delete specific insured', function() {
         it('should create and delete', function(done) {
-            request.post('http://localhost:3000/proposal', { json: getProposal() }, (err, res, body) => {
+            request.post(apiEndpoint+'/proposal', { json: getProposal() }, (err, res, body) => {
                 if (err) assert.fail(err);
                 let uuid = body.uuid;
-                request.del('http://localhost:3000/proposal/'+uuid, { json: true }, (err, res, body) => {
+                request.del(apiEndpoint+'/proposal/'+uuid, { json: true }, (err, res, body) => {
                     if (err) assert.fail(err);
                     assert.equal(res.statusCode,200);
-                    request('http://localhost:3000/proposal/'+uuid, { json: true }, (err, res, body) => {
+                    request(apiEndpoint+'/proposal/'+uuid, { json: true }, (err, res, body) => {
                         if (err) assert.fail(err);
                         assert.equal(body.message.includes("Not found"),true);
                         assert.equal(res.statusCode,404);
@@ -116,7 +117,7 @@ describe('proposal api', function() {
     }); 
     describe('update not found', function() {
         it('should return not found', function(done) {        
-            request.put('http://localhost:3000/proposal/123', { json: getProposal() }, (err, res, body) => {
+            request.put(apiEndpoint+'/proposal/123', { json: getProposal() }, (err, res, body) => {
                 if (err) assert.fail(err);
                 assert.equal(body.message.includes("Not found"),true);
                 assert.equal(res.statusCode,404);
@@ -126,13 +127,13 @@ describe('proposal api', function() {
     });    
     describe('create and get', function() {
         it('should create and return a proposal', function(done) {
-            request.post('http://localhost:3000/proposal', { json: getProposal() }, (err, res, body) => {
+            request.post(apiEndpoint+'/proposal', { json: getProposal() }, (err, res, body) => {
                 if (err) assert.fail(err);
                 let uuid = body.uuid;
-                request.put('http://localhost:3000/proposal/'+uuid, { json: getProposal2() }, (err, res, body) => {
+                request.put(apiEndpoint+'/proposal/'+uuid, { json: getProposal2() }, (err, res, body) => {
                     if (err) assert.fail(err);
                     assert.equal(res.statusCode,200);
-                    request.get('http://localhost:3000/proposal/'+uuid, { json: true }, (err, res, body) => {
+                    request.get(apiEndpoint+'/proposal/'+uuid, { json: true }, (err, res, body) => {
                         if (err) assert.fail(err);
             
                         assert.equal(body.car.plate,"AZD-9999");

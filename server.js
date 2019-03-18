@@ -5,17 +5,21 @@ const bodyParser = require('body-parser');
 
 // create express app
 const app = express();
-
-// define a simple route
-app.get('/', (req, res) => {
-    res.json({"message": "Welcome to insured-app!"});
-});
+const appPort = "3000";
 
 // create express insured-app
 const apiInsuredApp = express();
 const apiVersion = "v1"
 const apiContext = "insured-app"
-const apiCotextRoot = apiContext + "/" + apiVersion;
+//const apiCotextRoot =  "/" + apiContext + "/" + apiVersion;
+const apiCotextRoot =  "";
+const apiEndpoint =  "http://localhost:" + appPort + apiCotextRoot;
+module.exports.apiEndpoint = apiEndpoint;
+
+// define a simple route
+app.get('/', (req, res) => {
+    res.json({"message": "Welcome to insured-app!"});
+});
 
 // parse requests of content-type - application/x-www-form-urlencoded
 apiInsuredApp.use(bodyParser.urlencoded({ extended: true }))
@@ -27,17 +31,14 @@ require('./app/routes/insured.routes.js')(apiInsuredApp);
 require('./app/routes/proposal.routes.js')(apiInsuredApp);
 
 apiInsuredApp.on('mount', function (parent) {
-    console.log('Admin Mounted');
-    // console.log(parent); // refers to the parent app
-  });
-
-app.use("/"+apiCotextRoot,apiInsuredApp);
-
-console.log(apiInsuredApp);
-
-// listen for requests
-const server = app.listen(3000, () => {
-    log.debug("Server is listening on port 3000");
+    log.debug("insured-app API: "+apiEndpoint);
 });
 
-module.exports = server;
+app.use(apiCotextRoot,apiInsuredApp);
+
+// listen for requests
+const server = app.listen(appPort, () => {
+    log.debug("Server is listening on port "+appPort);
+});
+
+module.exports.server = server;

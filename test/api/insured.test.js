@@ -1,5 +1,6 @@
 const assert = require('assert');
 const request = require('request');
+const apiEndpoint = require('../../server').apiEndpoint;
 
 function getInsured() {
     return {
@@ -56,10 +57,10 @@ function getInsured2() {
 describe('insured api', function() {
     describe('create and get', function() {
         it('should create and return an insured', function(done) {
-            request.post('http://localhost:3000/insured', { json: getInsured() }, (err, res, body) => {
+            request.post(apiEndpoint+'/insured', { json: getInsured() }, (err, res, body) => {
                 if (err) assert.fail(err);
                 let uuid = body.uuid;
-                request.get('http://localhost:3000/insured/'+uuid, { json: true }, (err, res, body) => {
+                request.get(apiEndpoint+'/insured/'+uuid, { json: true }, (err, res, body) => {
                     if (err) assert.fail(err);
             
                     assert.equal(body.firstName,"João");
@@ -90,7 +91,7 @@ describe('insured api', function() {
     });
     describe('list all', function() {
         it('should return an insured list', function(done) {
-            request('http://localhost:3000/insured', { json: true }, (err, res, body) => {
+            request(apiEndpoint+'/insured', { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
                 assert.ok(body.length>0)
                 assert.equal(res.statusCode,200);
@@ -100,7 +101,7 @@ describe('insured api', function() {
     });
     describe('get not found', function() {
         it('should return not found', function(done) {
-            request('http://localhost:3000/insured/123', { json: true }, (err, res, body) => {
+            request(apiEndpoint+'/insured/123', { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
                 assert.equal(body.message.includes("Not found"),true);
                 assert.equal(res.statusCode,404);
@@ -110,7 +111,7 @@ describe('insured api', function() {
     });
     describe('delete not found', function() {
         it('should return not found', function(done) {
-            request.del('http://localhost:3000/insured/123', { json: true }, (err, res, body) => {
+            request.del(apiEndpoint+'/insured/123', { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
                 assert.equal(body.message.includes("Not found"),true);
                 assert.equal(res.statusCode,404);
@@ -120,13 +121,13 @@ describe('insured api', function() {
     });
     describe('create and delete specific insured', function() {
         it('should create and delete insured', function(done) {
-            request.post('http://localhost:3000/insured', { json: getInsured() }, (err, res, body) => {
+            request.post(apiEndpoint+'/insured', { json: getInsured() }, (err, res, body) => {
                 if (err) assert.fail(err);
                 let uuid = body.uuid;
-                request.del('http://localhost:3000/insured/'+uuid, { json: true }, (err, res, body) => {
+                request.del(apiEndpoint+'/insured/'+uuid, { json: true }, (err, res, body) => {
                     if (err) assert.fail(err);
                     assert.equal(res.statusCode,200);
-                    request('http://localhost:3000/insured/'+uuid, { json: true }, (err, res, body) => {
+                    request(apiEndpoint+'/insured/'+uuid, { json: true }, (err, res, body) => {
                         if (err) assert.fail(err);
                         assert.equal(body.message.includes("Not found"),true);
                         assert.equal(res.statusCode,404);
@@ -138,7 +139,7 @@ describe('insured api', function() {
     });
     describe('update not found', function() {
         it('should return not found', function(done) {
-            request.put('http://localhost:3000/insured/123', { json: getInsured() }, (err, res, body) => {
+            request.put(apiEndpoint+'/insured/123', { json: getInsured() }, (err, res, body) => {
                 if (err) assert.fail(err);
                 assert.equal(body.message.includes("Not found"),true);
                 assert.equal(res.statusCode,404);
@@ -148,13 +149,13 @@ describe('insured api', function() {
     });
     describe('create and update specific insured', function() {
         it('should return insured update', function(done) {
-            request.post('http://localhost:3000/insured', { json: getInsured() }, (err, res, body) => {
+            request.post(apiEndpoint+'/insured', { json: getInsured() }, (err, res, body) => {
                 if (err) assert.fail(err);
                 let uuid = body.uuid;
-                request.put('http://localhost:3000/insured/'+uuid, { json: getInsured2() }, (err, res, body) => {
+                request.put(apiEndpoint+'/insured/'+uuid, { json: getInsured2() }, (err, res, body) => {
                     if (err) assert.fail(err);
                     assert.equal(res.statusCode,200);
-                    request('http://localhost:3000/insured/'+uuid, { json: true }, (err, res, body) => {
+                    request(apiEndpoint+'/insured/'+uuid, { json: true }, (err, res, body) => {
                         if (err) assert.fail(err);
 
                         assert.equal(body.firstName,"Pedro");
