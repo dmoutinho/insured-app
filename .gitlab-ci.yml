@@ -7,7 +7,7 @@ stages:
   - build
   
 npm-test:
-  image: dmoutinho/kubectl-gcloud
+  image: node:11
   stage: test
   script:
   - npm install
