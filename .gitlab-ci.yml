@@ -4,7 +4,15 @@ services:
 
 stages:
   - build
-     
+  - test
+  
+npm-test:
+  image: dmoutinho/kubectl-gcloud
+  stage: test
+  script:
+  - npm install
+  - npm test
+
 docker-build:
   stage: build
   script:
