@@ -3,8 +3,8 @@ services:
   - docker:dind
 
 stages:
-  - build
   - test
+  - build
   
 npm-test:
   image: dmoutinho/kubectl-gcloud
