@@ -8,6 +8,6 @@ stages:
 docker-build:
   stage: build
   script:
-  - docker build -t dmoutinho/$CI_COMMIT_REF_NAME .
+  - docker build -t dmoutinho/insured-app .
   - docker login -u dmoutinho -p $DOCKER_PASS
-  - docker push dmoutinho/$CI_COMMIT_REF_NAME
+  - docker push dmoutinho/insured-app
