@@ -38,7 +38,7 @@ app.use(apiCotextRoot,apiInsuredApp);
 
 // listen for requests
 const server = app.listen(appPort, () => {
-    log.debug("Server is listening on port "+appPort);
+    log.debug("Server is listening on port  "+appPort);
 });
 
 module.exports.server = server;
