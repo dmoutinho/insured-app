@@ -2,16 +2,12 @@ image: docker:latest
 services:
   - docker:dind
 
-variables:
-  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-
 stages:
   - build
      
 docker-build:
   stage: build
   script:
-  - docker build -t $IMAGE_TAG .
+  - docker build -t dmoutinho/$CI_COMMIT_REF_NAME .
   - docker login -u dmoutinho -p $DOCKER_PASS
-  - docker tag $IMAGE_TAG dmoutinho/$IMAGE_TAG
-  - docker push dmoutinho/$IMAGE_TAG
+  - docker push dmoutinho/$CI_COMMIT_REF_NAME
