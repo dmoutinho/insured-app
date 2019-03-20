@@ -8,7 +8,7 @@ describe('insured.model.test.js', function() {
         it('should return array with FIRSTNAME_REQUIRED', function() {
             let erros = (new Insured({})).validate();
             assert.ok(erros.indexOf("FIRSTNAME_REQUIRED")!=-1);
-            assert.ok(false);
+            //assert.ok(false);
         });
     });
     describe('firstName length 1', function() {
