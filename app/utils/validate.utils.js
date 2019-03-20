@@ -8,7 +8,7 @@ module.exports.CONST = {
 
 function toArray(validateReturn) {
     let erros = [];
-    for(var field in validateReturn) {
+    for(let field in validateReturn) {
         erros = erros.concat(validateReturn[field]);
     }
     return erros;
