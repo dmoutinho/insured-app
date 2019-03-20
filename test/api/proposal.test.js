@@ -2,6 +2,7 @@ const assert = require('assert');
 const request = require('request');
 const Proposal = require('../../app/models/proposal.model.js');
 const apiEndpoint = require('../../server').apiEndpoint;
+const message = require('../../app/utils/message.utils.js');
 
 function getProposal() {
     return {
@@ -81,7 +82,7 @@ describe('proposal api', function() {
         it('should return not found', function(done) {
             request(apiEndpoint+'/proposal/123', { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
-                assert.equal(body.message.includes("Not found"),true);
+                assert.equal(body.message,message.CONST.NOT_FOUND);
                 assert.equal(res.statusCode,404);
                 done();
             });
@@ -91,7 +92,7 @@ describe('proposal api', function() {
         it('should return not found', function(done) {
             request.del(apiEndpoint+'/proposal/123', { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
-                assert.equal(body.message.includes("Not found"),true);
+                assert.equal(body.message,message.CONST.NOT_FOUND);
                 assert.equal(res.statusCode,404);
                 done();
             });
@@ -107,7 +108,7 @@ describe('proposal api', function() {
                     assert.equal(res.statusCode,200);
                     request(apiEndpoint+'/proposal/'+uuid, { json: true }, (err, res, body) => {
                         if (err) assert.fail(err);
-                        assert.equal(body.message.includes("Not found"),true);
+                        assert.equal(body.message,message.CONST.NOT_FOUND);
                         assert.equal(res.statusCode,404);
                         done();
                     });
@@ -119,7 +120,7 @@ describe('proposal api', function() {
         it('should return not found', function(done) {        
             request.put(apiEndpoint+'/proposal/123', { json: getProposal() }, (err, res, body) => {
                 if (err) assert.fail(err);
-                assert.equal(body.message.includes("Not found"),true);
+                assert.equal(body.message,message.CONST.NOT_FOUND);
                 assert.equal(res.statusCode,404);
                 done();
             });

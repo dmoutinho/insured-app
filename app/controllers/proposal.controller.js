@@ -2,6 +2,7 @@ const LogBuilder = require('../log/log-builder.js');
 const log = new LogBuilder(__filename);
 const Proposal = require('../models/proposal.model.js');
 const proposalRepository = require('../models/proposal.repository.model.js');
+const message = require("../utils/message.utils.js");
 
 // approve, decline, analyze
 exports.updateStatus = (req, res) => {
@@ -30,19 +31,19 @@ exports.updateStatus = (req, res) => {
                 res.status(200).send(prop);
             } else {
                 res.status(404).send({
-                    message: "Not found with uuid " + req.params.proposalUuid
+                    message: message.CONST.NOT_FOUND
                 });    
             }
 
         } else {
             res.status(404).send({
-                message: "Not found with uuid " + req.params.proposalUuid
+                message: message.CONST.NOT_FOUND
             });    
         }        
     } catch (error) {
         log.debug("updateStatus error: "+error.message);
         res.status(500).send({
-            message: "Some error occurred!"
+            message: message.CONST.INTERNAL_ERROR
         });        
     }
 };

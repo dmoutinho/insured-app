@@ -1,5 +1,6 @@
 const LogBuilder = require('../log/log-builder.js');
 const log = new LogBuilder(__filename);
+const message = require('../utils/message.utils.js');
 
 function getRepository(path) {
     if(path.includes("insured")) {
@@ -36,7 +37,7 @@ exports.create = (req, res) => {
     } catch (error) {
         log.debug("create error: "+error.message);
         res.status(500).send({
-            message: "Some error occurred!"
+            message: message.CONST.INTERNAL_ERROR
         });               
     }
 };
@@ -50,7 +51,7 @@ exports.findAll = (req, res) => {
     } catch (error) {
         log.debug("findAll error: "+error.message);
         res.status(500).send({
-            message: "Some error occurred!"
+            message: message.CONST.INTERNAL_ERROR
         });        
     }
 };
@@ -65,13 +66,13 @@ exports.findOneByUuid = (req, res) => {
             res.status(200).send(model);
         } else {
             res.status(404).send({
-                message: "Not found with uuid " + req.params.uuid
+                message: message.CONST.NOT_FOUND
             });    
         }        
     } catch (error) {
         log.debug("findOneByUuid error: "+error.message);
         res.status(500).send({
-            message: "Some error occurred!"
+            message: message.CONST.INTERNAL_ERROR
         });        
     }
 };
@@ -97,14 +98,14 @@ exports.update = (req, res) => {
                return res.status(200).send(model);
            } else {
                return res.status(404).send({
-                   message: "Not found with uuid " + req.params.uuid
+                message: message.CONST.NOT_FOUND
                });    
            }
        }
     } catch (error) {
         log.debug("update error: "+error.message);
         res.status(500).send({
-            message: "Some error occurred!"
+            message: message.CONST.INTERNAL_ERROR
         });        
     }
 };
@@ -118,13 +119,13 @@ exports.delete = (req, res) => {
             res.status(200).send();
         } else {
             res.status(404).send({
-                message: "Not found with uuid " + req.params.uuid
+                message: message.CONST.NOT_FOUND
             });    
         }        
     } catch (error) {
         log.debug("delete error: "+error.message);
         res.status(500).send({
-            message: "Some error occurred!"
+            message: message.CONST.INTERNAL_ERROR
         });        
     }
 

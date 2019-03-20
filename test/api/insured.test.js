@@ -1,6 +1,7 @@
 const assert = require('assert');
 const request = require('request');
 const apiEndpoint = require('../../server').apiEndpoint;
+const message = require('../../app/utils/message.utils.js');
 
 function getInsured() {
     return {
@@ -103,7 +104,7 @@ describe('insured api', function() {
         it('should return not found', function(done) {
             request(apiEndpoint+'/insured/123', { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
-                assert.equal(body.message.includes("Not found"),true);
+                assert.equal(body.message,message.CONST.NOT_FOUND);
                 assert.equal(res.statusCode,404);
                 done();
             });
@@ -113,7 +114,7 @@ describe('insured api', function() {
         it('should return not found', function(done) {
             request.del(apiEndpoint+'/insured/123', { json: true }, (err, res, body) => {
                 if (err) assert.fail(err);
-                assert.equal(body.message.includes("Not found"),true);
+                assert.equal(body.message,message.CONST.NOT_FOUND);
                 assert.equal(res.statusCode,404);
                 done();
             });
@@ -129,7 +130,7 @@ describe('insured api', function() {
                     assert.equal(res.statusCode,200);
                     request(apiEndpoint+'/insured/'+uuid, { json: true }, (err, res, body) => {
                         if (err) assert.fail(err);
-                        assert.equal(body.message.includes("Not found"),true);
+                        assert.equal(body.message,message.CONST.NOT_FOUND);
                         assert.equal(res.statusCode,404);
                         done();
                     });
@@ -141,7 +142,7 @@ describe('insured api', function() {
         it('should return not found', function(done) {
             request.put(apiEndpoint+'/insured/123', { json: getInsured() }, (err, res, body) => {
                 if (err) assert.fail(err);
-                assert.equal(body.message.includes("Not found"),true);
+                assert.equal(body.message,message.CONST.NOT_FOUND);
                 assert.equal(res.statusCode,404);
                 done();
             });
