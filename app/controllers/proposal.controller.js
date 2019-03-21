@@ -13,7 +13,7 @@ exports.updateStatus = (req, res) => {
         if( prop ) {
             let statusChange = req.params.statusChange;
             log.debug("updateStatus statusChange: "+statusChange);
-            switch (key) {
+            switch (req.params.statusChange) {
                 case "approve":
                     prop.approve();
                     break;

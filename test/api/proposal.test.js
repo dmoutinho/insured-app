@@ -155,5 +155,71 @@ describe('proposal api', function() {
                 });
             });
         });
-    });    
+    });
+    describe('approve proposal', function() {
+        it('should return a APROVED proposal', function(done) {
+            request.post(apiEndpoint+'/proposal', { json: getProposal() }, (err, res, body) => {
+                if (err) assert.fail(err);
+                let uuid = body.uuid;
+                request.put(apiEndpoint+'/proposal/'+uuid+'/approve', { json: true }, (err, res, body) => {
+                    if (err) assert.fail(err);
+                    assert.equal(res.statusCode,200);
+                    request.get(apiEndpoint+'/proposal/'+uuid, { json: true }, (err, res, body) => {
+                        if (err) assert.fail(err);
+
+                        assert.equal(body.status,Proposal.STATUS_ENUM.APROVED);
+            
+                        assert.equal(res.statusCode,200);
+    
+                        done();
+            
+                    });
+                });
+            });
+        });
+    });
+    describe('analyze proposal', function() {
+        it('should return a ANALYSIS proposal', function(done) {
+            request.post(apiEndpoint+'/proposal', { json: getProposal() }, (err, res, body) => {
+                if (err) assert.fail(err);
+                let uuid = body.uuid;
+                request.put(apiEndpoint+'/proposal/'+uuid+'/analyze', { json: true }, (err, res, body) => {
+                    if (err) assert.fail(err);
+                    assert.equal(res.statusCode,200);
+                    request.get(apiEndpoint+'/proposal/'+uuid, { json: true }, (err, res, body) => {
+                        if (err) assert.fail(err);
+
+                        assert.equal(body.status,Proposal.STATUS_ENUM.ANALYSIS);
+            
+                        assert.equal(res.statusCode,200);
+    
+                        done();
+            
+                    });
+                });
+            });
+        });
+    });
+    describe('decline proposal', function() {
+        it('should return a DECLIDED proposal', function(done) {
+            request.post(apiEndpoint+'/proposal', { json: getProposal() }, (err, res, body) => {
+                if (err) assert.fail(err);
+                let uuid = body.uuid;
+                request.put(apiEndpoint+'/proposal/'+uuid+'/decline', { json: true }, (err, res, body) => {
+                    if (err) assert.fail(err);
+                    assert.equal(res.statusCode,200);
+                    request.get(apiEndpoint+'/proposal/'+uuid, { json: true }, (err, res, body) => {
+                        if (err) assert.fail(err);
+
+                        assert.equal(body.status,Proposal.STATUS_ENUM.DECLIDED);
+            
+                        assert.equal(res.statusCode,200);
+    
+                        done();
+            
+                    });
+                });
+            });
+        });
+    });
 });

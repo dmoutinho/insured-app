@@ -76,16 +76,27 @@ Proposal.prototype.validate = function() {
 	return erros;
 };
 
+const STATUS_ENUM = Object.freeze({
+	INITIAL : 0,
+	ANALYSIS : 1,
+	APROVED : 2, 
+	DECLIDED : 3
+});
+
+Proposal.prototype.STATUS_ENUM = STATUS_ENUM;
+
 Proposal.prototype.approve = function() {
-	this.status = 1;
+	this.status = this.STATUS_ENUM.APROVED;
 };
 
 Proposal.prototype.decline = function() {
-	this.status = 2;
+	this.status = this.STATUS_ENUM.DECLIDED;
 };
 
 Proposal.prototype.analyze = function() {
-	this.status = 3;
+	this.status = this.STATUS_ENUM.ANALYSIS;
 };
 
 module.exports = Proposal;
+
+module.exports.STATUS_ENUM = STATUS_ENUM;
